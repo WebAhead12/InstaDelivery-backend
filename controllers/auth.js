@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const dotenv = require("dotenv");
 const utils = require("../utils/utilities");
-const { response } = require("express");
 
 dotenv.config();
 
