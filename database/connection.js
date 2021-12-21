@@ -6,7 +6,7 @@ const connectionString = process.env.DATABASE_URL;
 
 const db = new pg.Pool({
     connectionString,
-    ssl: { rejectUnauthorized: false },
+    ssl: { rejectUnauthorized: process.env.NODE_ENV === 'development' },
 });
 
 module.exports = db;
