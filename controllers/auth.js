@@ -72,7 +72,7 @@ const register = (req, res) => {
 
 const userInfo = (req, res) => {
   const token = req.token;
-  const id = jwt.verifu(token, SECRET).user;
+  const id = jwt.verify(token, SECRET).user;
   model
     .getUserInfoByID(id)
     .then((userInfo) => {
