@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const dotenv = require("dotenv");
 const utils = require("../utils/utilities");
-const { response } = require("express");
 
 dotenv.config();
 
@@ -72,7 +71,7 @@ const register = (req, res) => {
 
 const userInfo = (req, res) => {
   const token = req.token;
-  const id = jwt.verifu(token, SECRET).user;
+  const id = jwt.verify(token, SECRET).user;
   model
     .getUserInfoByID(id)
     .then((userInfo) => {
