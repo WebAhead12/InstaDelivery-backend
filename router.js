@@ -1,10 +1,12 @@
-const express = require('express')
+const express = require("express");
+const verifyToken = require("./controllers/verifyToken");
+const authController = require("./controllers/auth");
+const storeController = require("./controllers/store");
+const router = express.Router();
 
-const router = express.Router()
+router.get("/products", storeController.fetchProducts);
+router.get("/users/thisUser", verifyToken.doVerify, users.userInfo);
+router.post("/users/login", users.login);
+router.post("/users/register", users.register);
 
-const authController = require('./controllers/auth')
-const storeController = require('./controllers/store')
-
-router.get('/products', storeController.fetchProducts)
-
-module.exports = router
+module.exports = router;
