@@ -172,9 +172,9 @@ INSERT INTO freezer (name, imgurl, price, store_id)  VALUES
   ('Chicken Fingers',  '/store/frozen foods/shnitzel.jpg',  35.90 , 5),
   ('Onion Rings',  '/store/frozen foods/onion rings.jpg',  18.90 , 5),
   ('Puff Pastry',  '/store/frozen foods/puff pastry.jpg',  14.90 , 5),
-  ('Cheese Borekas',  '/store/frozen foods/cheese borekas.jpg',  17.90 , 5),
-  ('Potato Borekas',  '/store/frozen foods/potato borekas.jpg',  17.90 , 5),
-  ('Filo Borekas',  '/store/frozen foods/filo borekas.jpg',  17.90 , 5),
+  ('Cheese Puff Pastry',  '/store/frozen foods/cheese borekas.jpg',  17.90 , 5),
+  ('Potato Puff Pastry',  '/store/frozen foods/potato borekas.jpg',  17.90 , 5),
+  ('Filo Puff Pastry',  '/store/frozen foods/filo borekas.jpg',  17.90 , 5),
   ('Pizza',  '/store/frozen foods/pizza.jpg',  24.90 , 5),
   ('Pizza Bites',  '/store/frozen foods/pizza bites.jpg',  22.90 , 5);
 
@@ -198,6 +198,6 @@ INSERT INTO beverages (name, imgurl, price, store_id)  VALUES
   ('Sprite Zero 1.5L',  '/store/beverage/sprite zero.jpg',  8.90 , 6),
   ('Cola 500ml 6pk.',  '/store/beverage/cola zero 6 bottles.jpg',  19.90 , 6),
   ('Van. Cherry D.Pepper',  '/store/beverage/dr pepper cherry vanilla.jpg',  6.90 , 6),
-  ('Blu',  '/store/beverage/blu.jpg',  4.90 , 6);
+  ('XL',  '/store/beverage/blu.jpg',  4.90 , 6);
 
 COMMIT; 
