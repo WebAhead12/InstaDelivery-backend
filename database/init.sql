@@ -198,6 +198,6 @@ INSERT INTO beverages (name, imgurl, price, store_id)  VALUES
   ('Sprite Zero 1.5L',  '/store/beverage/sprite zero.jpg',  8.90 , 6),
   ('Cola 500ml 6pk.',  '/store/beverage/cola zero 6 bottles.jpg',  19.90 , 6),
   ('Van. Cherry D.Pepper',  '/store/beverage/dr pepper cherry vanilla.jpg',  6.90 , 6),
-  ('Blu',  '/store/beverage/blu.jpg',  4.90 , 6);
+  ('XL',  '/store/beverage/blu.jpg',  4.90 , 6);
 
 COMMIT; 
