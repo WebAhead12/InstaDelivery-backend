@@ -48,7 +48,7 @@ const register = (req, res) => {
       if (acc.length) {
         utils.throwError(`${account.email} already exists`, 403);
       } else {
-        bcrypyt
+        bcrypt
           .genSalt(10)
           .then((salt) => bcrypt.hash(password, salt))
           .then((hash) => model.createUser({ email, password: hash }))
