@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS users, cart, store, dairy, bakery, pantry, meat, freezer, b
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  username VARCHAR(25) NOT NULL,
+  email VARCHAR(50) NOT NULL,
   name VARCHAR(25) NOT NULL,
   password VARCHAR(70) NOT NULL
 );
@@ -71,8 +71,8 @@ CREATE TABLE beverages (
   store_id INTEGER REFERENCES store(id)
 );
 
-INSERT INTO users (username, name, password)  VALUES
-  ('xo', 'Myname', '$2a$10$2Y25cn20sSwFZPWHx1nD.OZjM5o140DUumOzYm8h85fGd15WtAJoi');
+INSERT INTO users (email, name, password)  VALUES
+  ('a@a.a', 'instadelivery', '$2a$10$o0HK3sKo410TvpvTdzgjN./LW8VmMmtlPc0f/s70QkKRXE18u68J.');
 
 INSERT INTO store (category)  VALUES
   ('Dairy'),
