@@ -81,7 +81,7 @@ INSERT INTO cart (imgurl, name, quantity, price, user_id)  VALUES
   ('/store/meat/drumsticks.jpg', 'Drumsticks 8pk.', 3, 29.90 , 1),
   ('/store/meat/full chicken.jpg', 'Full Chicken 1c.', 1, 39.90 , 1),
   ('/store/meat/chicken liver.png', 'Chicken Liver', 1, 39.90 , 1),
-  ('/store/mea/salami.jpg', 'Salami.', 2, 23.90 , 1);
+  ('/store/meat/salami.jpg', 'Salami.', 2, 23.90 , 1);
 
 INSERT INTO store (category)  VALUES
   ('Dairy'),
@@ -152,7 +152,7 @@ INSERT INTO meat (name, imgurl, price, store_id)  VALUES
   ('Full Chicken 1c.',  '/store/meat/full chicken.jpg',  39.90 , 4),
   ('Ground Beef 1kg',  '/store/meat/ground beef.jpg',  35.90 , 4),
   ('Chicken Liver',  '/store/meat/chicken liver.png',  39.90 , 4),
-  ('Salami.',  '/store/mea/salami.jpg',  23.90 , 4),
+  ('Salami.',  '/store/meat/salami.jpg',  23.90 , 4),
   ('Turkey and Salami',  '/store/meat/turkey and salami.png',  39.90 , 4),
   ('Turkey',  '/store/meat/turkey.jpg',  23.90 , 4);
 

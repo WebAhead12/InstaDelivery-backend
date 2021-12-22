@@ -1,20 +1,24 @@
 const model = require("../model/shopping");
 const jwt = require("jsonwebtoken");
+const { decode } = require("iconv-lite");
 
-// model.addToCart(id)
+const SECRET = process.env.JWT_SECRET;
 
 const fetchCart = (req, res) => {
   const token = req.token;
-  const id = jwt.verify(token, SECRET).user; //decrypt token to get the id
+
+  const id = jwt.verify(token, SECRET, (error, decoded) => {
+    if (!error) {
+      return decoded.user;
+    } else {
+      res.send({ error: "Expired Token" });
+      return;
+    }
+  }); //decrypt token to get the id
   model
     .addToCart(id)
     .then((cartItems) => {
-      if (!items.length) {
-        res.status(200).send({ items: [] }); //0 items.
-      } else {
-        res.status(200).send({ items: cartItems });
-      }
-      return;
+      res.status(200).send({ items: cartItems, error: "" });
     })
     .catch((error) => {
       console.error(error);

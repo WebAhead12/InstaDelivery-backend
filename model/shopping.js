@@ -1,6 +1,6 @@
 const db = require("../database/connection");
 
-// cart (imgUrl, name, quantity, price, user_id)
+// cart (imgurl, name, quantity, price, user_id)
 //id => user ID
 const addToCart = (id) => {
   return db
@@ -12,4 +12,4 @@ const addToCart = (id) => {
       return cartItems;
     });
 };
-module.export = { addToCart };
+module.exports = { addToCart };
