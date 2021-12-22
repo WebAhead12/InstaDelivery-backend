@@ -46,7 +46,6 @@ const login = (req, res) => {
 //register new users (players)
 const register = (req, res) => {
   const account = req.body;
-  console.log(account);
 
   //check if account exists.
   model
@@ -93,7 +92,6 @@ const register = (req, res) => {
 //return information about the user e.g. id, email, name
 const userInfo = (req, res) => {
   const token = req.token;
-  //check line 97 console.log
   const id = jwt.verify(token, SECRET).user; //decrypt token to get the id
   model
     .getUserInfoByID(id)
