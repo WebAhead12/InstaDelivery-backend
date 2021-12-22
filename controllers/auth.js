@@ -36,7 +36,7 @@ const login = (req, res) => {
         })
         .catch((error) => {
           res.send({
-            error: error.status === 401 ? error.message : "An unexpected error",
+            error: error.status === 401 ? error.message : "An unexpected error has occured, please try again later.",
           });
         });
     })
