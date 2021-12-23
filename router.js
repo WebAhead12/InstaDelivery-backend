@@ -5,7 +5,8 @@ const storeController = require("./controllers/store");
 
 const router = express.Router();
 
-router.get("/user/cart", verifyToken.doVerify, storeController.fetchCart);
+router.get("/user/cart", verifyToken.doVerify, storeController.getCart);
+router.post("/user/cart", verifyToken.doVerify, storeController.setCart);
 router.get("/store/category", storeController.fetchCategory);
 router.get("/store/products", storeController.fetchProducts);
 router.get("/user/thisUser", verifyToken.doVerify, authController.userInfo);
