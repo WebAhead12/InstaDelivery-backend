@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "NODE_ENV=development nodemon server.js",
     "start": "NODE_ENV=production node server.js",
-    "build:db": "node database/build.js"
+    "build:db": "node database/build.js",
+    "server": "fuser -k 4000/tcp && nodemon server"
   },
   "repository": {
     "type": "git",
