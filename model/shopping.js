@@ -15,10 +15,25 @@ const addToCart = (id) => {
 
 //create a function that brings all the categories from the store and
 const category = () => {
-  return db.query(`SELECT * FROM store`).then((results) => {
-    const categoryItems = results.rows;
-    return categoryItems;
+  return db.query(`SELECT * FROM categories`).then((results) => {
+    return results.rows;
   });
 };
 
-module.exports = { addToCart, category };
+//get productsByCategory from db.
+const productsByCategory = (id) => {
+  return db
+    .query(`SELECT * FROM products WHERE category_id=${id}`)
+    .then((results) => {
+      return results.rows;
+    });
+};
+
+//get all products from db.
+const allProducts = () => {
+  return db.query(`SELECT * FROM products`).then((results) => {
+    return results.rows;
+  });
+};
+
+module.exports = { addToCart, category, productsByCategory, allProducts };
