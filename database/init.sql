@@ -1,6 +1,6 @@
 BEGIN;
 
-DROP TABLE IF EXISTS users, cart, store, dairy, bakery, pantry, meat, freezer, beverages CASCADE;
+DROP TABLE IF EXISTS users, cart, categories, products CASCADE;
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
@@ -18,58 +18,19 @@ CREATE TABLE cart (
   user_id INTEGER REFERENCES users(id)
 );
 
-CREATE TABLE store (
+CREATE TABLE categories (
   id SERIAL PRIMARY KEY,
-  category VARCHAR(25) NOT NULL
+  name VARCHAR(25) NOT NULL
 );
 
-CREATE TABLE dairy (
+CREATE TABLE products (
   id SERIAL PRIMARY KEY,
   name VARCHAR(25) NOT NULL,
   imgurl VARCHAR(50) NOT NULL,
   price REAL NOT NULL,
-  store_id INTEGER REFERENCES store(id)
+  category_id INTEGER REFERENCES categories(id)
 );
 
-CREATE TABLE bakery (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(25) NOT NULL,
-  imgurl VARCHAR(50) NOT NULL,
-  price REAL NOT NULL,
-  store_id INTEGER REFERENCES store(id)
-);
-
-CREATE TABLE pantry (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(25) NOT NULL,
-  imgurl VARCHAR(50) NOT NULL,
-  price REAL NOT NULL,
-  store_id INTEGER REFERENCES store(id)
-);
-
-CREATE TABLE meat (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(25) NOT NULL,
-  imgurl VARCHAR(50) NOT NULL,
-  price REAL NOT NULL,
-  store_id INTEGER REFERENCES store(id)
-);
-
-CREATE TABLE freezer (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(25) NOT NULL,
-  imgurl VARCHAR(50) NOT NULL,
-  price REAL NOT NULL,
-  store_id INTEGER REFERENCES store(id)
-);
-
-CREATE TABLE beverages (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(25) NOT NULL,
-  imgurl VARCHAR(50) NOT NULL,
-  price REAL NOT NULL,
-  store_id INTEGER REFERENCES store(id)
-);
 
 
 INSERT INTO users (email, name, password)  VALUES
@@ -81,9 +42,9 @@ INSERT INTO cart (imgurl, name, quantity, price, user_id)  VALUES
   ('/store/meat/drumsticks.jpg', 'Drumsticks 8pk.', 3, 29.90 , 1),
   ('/store/meat/full chicken.jpg', 'Full Chicken 1c.', 1, 39.90 , 1),
   ('/store/meat/chicken liver.png', 'Chicken Liver', 1, 39.90 , 1),
-  ('/store/mea/salami.jpg', 'Salami.', 2, 23.90 , 1);
+  ('/store/meat/salami.jpg', 'Salami.', 2, 23.90 , 1);
 
-INSERT INTO store (category)  VALUES
+INSERT INTO categories (name)  VALUES
   ('Dairy'),
   ('Bakery'),
   ('Pantry'),
@@ -91,7 +52,7 @@ INSERT INTO store (category)  VALUES
   ('Freezer'),
   ('Beverages');
 
-INSERT INTO dairy (name, imgurl, price, store_id)  VALUES
+INSERT INTO products (name, imgurl, price, category_id)  VALUES
   ('1% Milk',  '/store/dairy/1 milk.jpg',  10.90 , 1 ),
   ('3% Milk',  '/store/dairy/3 milk.jpg',  10.90 , 1 ),
   ('Large Yogurt',  '/store/dairy/large yogurt.jpg',  25.90 , 1 ),
@@ -100,7 +61,7 @@ INSERT INTO dairy (name, imgurl, price, store_id)  VALUES
   ('Almond Milk',  '/store/dairy/almond milk.jpg',  11.90 , 1 ),
   ('Hazelnut Milk',  '/store/dairy/hazelnut milk.jpg',  11.90 , 1 ),
   ('Cashew Milk',  '/store/dairy/cashew milk.jpg',  11.90 , 1 ),
-  ('Soy Milk',  '/store/dair/soy milk.jpg',  11.90 , 1 ),
+  ('Soy Milk',  '/store/dairy/soy milk.jpg',  11.90 , 1 ),
   ('Coconut Milk',  '/store/dairy/coconut milk.jpg',  11.90 , 1 ),
   ('Choc. Soy Milk',  '/store/dairy/chocolate soy milk.jpg',  11.90 , 1 ),
   ('Van. Soy Milk',  '/store/dairy/vanilla soy milk.jpg',  11.90 , 1 ),
@@ -108,7 +69,7 @@ INSERT INTO dairy (name, imgurl, price, store_id)  VALUES
   ('Mozzerella',  '/store/dairy/mozzerella cheese.jpg',  19.90 , 1 ),
   ('Cheddar',  '/store/dairy/cheddar.jpg',  23.90 , 1 );
 
-INSERT INTO bakery (name, imgurl, price, store_id)  VALUES
+INSERT INTO products (name, imgurl, price, category_id)  VALUES
   ('Bagels 4pk.',  '/store/bakery/bagels.jpg',  6.90 , 2 ),
   ('Baguettes 2pk.',  '/store/bakery/baguette.jpg',  2.90 , 2 ),
   ('Gluten-free loaf',  '/store/bakery/bread no gluten.jpg',  12.90 , 2 ),
@@ -119,7 +80,7 @@ INSERT INTO bakery (name, imgurl, price, store_id)  VALUES
   ('Croissant 1c.',  '/store/bakery/croissant.jpg',  1.90 , 2 ),
   ('Choc. Croissant 1c.',  '/store/bakery/chocolate croissant.jpg',  1.90 , 2 );
 
-INSERT INTO pantry (name, imgurl, price, store_id)  VALUES
+INSERT INTO products (name, imgurl, price, category_id)  VALUES
   ('Chicken Stock',  '/store/pantry/chicken powder.png',  14.90 , 3),
   ('Beans',  '/store/pantry/beans.jpg',  2.90 , 3),
   ('Corn',  '/store/pantry/corn.jpg',  2.90 , 3),
@@ -144,7 +105,7 @@ INSERT INTO pantry (name, imgurl, price, store_id)  VALUES
   ('Vanilla Sugar',  '/store/pantry/vanilla sugar.jpg',  19.90 , 3),
   ('Chocolate Chips',  '/store/pantry/chocolate chips.jpg',  18.90 , 3);
 
-INSERT INTO meat (name, imgurl, price, store_id)  VALUES
+INSERT INTO products (name, imgurl, price, category_id)  VALUES
   ('Entrecôte 1kg',  '/store/meat/entrecote.jpg',  1.90 , 4),
   ('Burgers 4pk.',  '/store/meat/burgers.jpg',  29.90 , 4),
   ('Chicken Breast 2kg',  '/store/meat/chicken breast.jpg',  39.90 , 4),
@@ -152,11 +113,11 @@ INSERT INTO meat (name, imgurl, price, store_id)  VALUES
   ('Full Chicken 1c.',  '/store/meat/full chicken.jpg',  39.90 , 4),
   ('Ground Beef 1kg',  '/store/meat/ground beef.jpg',  35.90 , 4),
   ('Chicken Liver',  '/store/meat/chicken liver.png',  39.90 , 4),
-  ('Salami.',  '/store/mea/salami.jpg',  23.90 , 4),
+  ('Salami.',  '/store/meat/salami.jpg',  23.90 , 4),
   ('Turkey and Salami',  '/store/meat/turkey and salami.png',  39.90 , 4),
   ('Turkey',  '/store/meat/turkey.jpg',  23.90 , 4);
 
-INSERT INTO freezer (name, imgurl, price, store_id)  VALUES
+INSERT INTO products (name, imgurl, price, category_id)  VALUES
   ('Broccoli',  '/store/frozen foods/frozen broccoli.jpg',  14.90 , 5),
   ('Carrots',  '/store/frozen foods/frozen carrots.jpg',  14.90 , 5),
   ('Corn',  '/store/frozen foods/frozen corn.jpg',  14.90 , 5),
@@ -178,7 +139,7 @@ INSERT INTO freezer (name, imgurl, price, store_id)  VALUES
   ('Pizza',  '/store/frozen foods/pizza.jpg',  24.90 , 5),
   ('Pizza Bites',  '/store/frozen foods/pizza bites.jpg',  22.90 , 5);
 
-INSERT INTO beverages (name, imgurl, price, store_id)  VALUES
+INSERT INTO products (name, imgurl, price, category_id)  VALUES
   ('1.5 L. Water 6pk.',  '/store/beverage/6 pack 1 15 water.jpg',  19.90 , 6),
   ('Apple Juice 1.5L',  '/store/beverage/apple juice.jpg',  4.90 , 6),
   ('Cherry Juice 1.5L',  '/store/beverage/cherry juice.png',  4.90 , 6),
