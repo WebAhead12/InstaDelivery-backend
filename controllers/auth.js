@@ -36,7 +36,10 @@ const login = (req, res) => {
         })
         .catch((error) => {
           res.send({
-            error: error.status === 401 ? error.message : "An unexpected error has occured, please try again later.",
+            error:
+              error.status === 401
+                ? error.message
+                : "An unexpected error has occured, please try again later.",
           });
         });
     })
@@ -91,15 +94,14 @@ const register = (req, res) => {
 
 //return information about the user e.g. id, email, name
 const userInfo = (req, res) => {
-  const token = req.token;
-  const id = jwt.verify(token, SECRET).user; //decrypt token to get the id
+  const id = req.id;
   model
     .getUserInfoByID(id)
     .then((userInfo) => {
       if (!userInfo.length) throw new Error("User doesnt exist");
       else {
         const [info] = userInfo; //info is an object that contains the information needed.
-        res.send(info);
+        res.status(200).send(info);
       }
     })
     .catch((error) => res.status(404).send({ error: error.message }));

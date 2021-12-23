@@ -1,21 +1,10 @@
 const model = require("../model/shopping");
-const jwt = require("jsonwebtoken");
 
-const SECRET = process.env.JWT_SECRET;
-
-//after checking that the user is logged in, send the cart data to frontend.
-const fetchCart = (req, res) => {
-  const token = req.token;
-  const id = jwt.verify(token, SECRET, (error, decoded) => {
-    if (!error) {
-      return decoded.user;
-    } else {
-      res.send({ error: "Expired Token" });
-      return;
-    }
-  }); //decrypt token to get the id
+//after checking that the user is logged in, send the cart items to frontend.
+const getCart = (req, res) => {
+  const id = req.id;
   model
-    .addToCart(id)
+    .getUsersCart(id)
     .then((cartItems) => {
       res.status(200).send({ items: cartItems, error: "" });
     })
@@ -23,6 +12,24 @@ const fetchCart = (req, res) => {
       console.error(error);
       res.send({
         error: "Something went wrong with the cart items | " + error.message,
+      });
+    });
+};
+
+//check use is logged in, then update the user's cart.
+const setCart = (req, res) => {
+  const id = req.id;
+  const items = req.body;
+  model
+    .emptyCart(id)
+    .then(() => model.updateCart(id, items))
+    .then(() => res.status(200).send({ response: "Successful", error: "" }))
+    .catch((err) => {
+      console.error(err);
+      res.status(501).send({
+        error:
+          "DB server lacks the ability to fulfill the request. | " +
+          err.message,
       });
     });
 };
@@ -79,6 +86,7 @@ const fetchProducts = (req, res) => {
 
 module.exports = {
   fetchProducts,
-  fetchCart,
+  getCart,
+  setCart,
   fetchCategory,
 };
