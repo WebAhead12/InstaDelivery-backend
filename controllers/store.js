@@ -88,12 +88,14 @@ const fetchProducts = (req, res) => {
 const setOrder = (req, res) => {
   const id = req.id;
   const checkOutData = req.body;
-  //utils.totalPrice(items);
-  model //trick prettier
-    .insertAddress(id, checkOutData)
+  model
+    .getUsersCart(id)
+    .then((items) => {
+      req.items = items;
+      req.totalPrice = utils.totalPrice(items);
+    })
+    .then(() => model.insertAddress(id, checkOutData, req.totalPrice))
     .then((res) => (req.addressID = res.id))
-    .then(() => model.getUsersCart(id))
-    .then((items) => (req.items = items))
     .then(() => model.insertOrderSummary(req.addressID, req.items))
     .then(() =>
       res.status(200).send({

@@ -52,7 +52,7 @@ const updateCart = (id, items) => {
 };
 
 //insert address to db and return it id.
-const insertAddress = (userID, checkOutData) => {
+const insertAddress = (userID, checkOutData, totalPrice) => {
   const values = [
     checkOutData.fullName,
     checkOutData.address,
@@ -61,11 +61,12 @@ const insertAddress = (userID, checkOutData) => {
     checkOutData.email,
     checkOutData.phoneNumber,
     checkOutData.paymentMethod,
+    totalPrice,
     userID,
   ];
   return db
     .query(
-      `INSERT INTO addresses(full_name, address, city, zipcode, email, phonenumber, payment_method, user_id) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`,
+      `INSERT INTO addresses(full_name, address, city, zipcode, email, phonenumber, payment_method, total_price, user_id) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id`,
       values
     )
     .then((res) => res.rows[0]);

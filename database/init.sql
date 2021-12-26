@@ -18,7 +18,7 @@ CREATE TABLE products (
   id SERIAL PRIMARY KEY,
   name VARCHAR(25) NOT NULL,
   imgurl VARCHAR(50) NOT NULL,
-  price VARCHAR(25) NOT NULL,
+  price VARCHAR(8) NOT NULL,
   category_id INTEGER REFERENCES categories(id)
 );
 
@@ -28,7 +28,7 @@ CREATE TABLE cart (
   imgurl VARCHAR(50) NOT NULL,
   name VARCHAR(25) NOT NULL,
   quantity INTEGER NOT NULL,
-  price VARCHAR(25) NOT NULL,
+  price VARCHAR(8) NOT NULL,
   user_id INTEGER REFERENCES users(id)
 );
 
@@ -41,6 +41,7 @@ CREATE TABLE addresses (
   email VARCHAR(50) NOT NULL,
   phonenumber VARCHAR(10) NOT NULL,
   payment_method VARCHAR(11) NOT NULL,
+  total_price VARCHAR(8) NOT NULL,
   user_id INTEGER REFERENCES users(id)
 );
 
@@ -48,7 +49,7 @@ CREATE TABLE order_summary (
   id SERIAL PRIMARY KEY,
   product_id INTEGER NOT NULL,
   product_name VARCHAR(25) NOT NULL,
-  product_price VARCHAR(25) NOT NULL,
+  product_price VARCHAR(8) NOT NULL,
   product_quantity INTEGER NOT NULL,
   addresses_id INTEGER REFERENCES addresses(id)
 );
