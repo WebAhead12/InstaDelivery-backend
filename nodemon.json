@@ -1,0 +1,6 @@
+{
+  "events": {
+    "crash": "kill-port 4000 && npm run dev"
+  },
+  "delay": "1500"
+}
