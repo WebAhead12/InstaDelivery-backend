@@ -4,7 +4,7 @@ const db = require("../database/connection");
 const getUsersCart = (id) => {
   return db
     .query(
-      `SELECT imgurl, name, quantity, price FROM cart WHERE user_id = ${id}`
+      `SELECT item_id, imgurl, name, quantity, price FROM cart WHERE user_id = ${id}`
     )
     .then((result) => result.rows);
 };
@@ -36,6 +36,7 @@ const updateCart = (id, items) => {
   for (let i = 0; i < items.length; i++) {
     setTimeout(() => {
       const values = [
+        items[i].id,
         items[i].imgurl,
         items[i].name,
         items[i].quantity,
@@ -43,11 +44,50 @@ const updateCart = (id, items) => {
         id,
       ];
       return db.query(
-        `INSERT INTO cart(imgurl, name, quantity, price, user_id) VALUES($1, $2, $3, $4, $5)`,
+        `INSERT INTO cart(item_id, imgurl, name, quantity, price, user_id) VALUES($1, $2, $3, $4, $5, $6)`,
         values
       );
     }, 1000 * (i + 1));
   }
+};
+
+//insert address to db and return it id.
+const insertAddress = (userID, checkOutData) => {
+  const values = [
+    checkOutData.fullName,
+    checkOutData.address,
+    checkOutData.city,
+    checkOutData.zipcode,
+    checkOutData.email,
+    checkOutData.phoneNumber,
+    checkOutData.paymentMethod,
+    userID,
+  ];
+  return db
+    .query(
+      `INSERT INTO addresses(full_name, address, city, zipcode, email, phonenumber, payment_method, user_id) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`,
+      values
+    )
+    .then((res) => res.rows[0]);
+};
+
+//insert a summary order binded with the address that must be shipped to.
+const insertOrderSummary = (addressID, items) => {
+  items.forEach((item, idx) => {
+    setTimeout(() => {
+      const values = [
+        item.item_id,
+        item.name,
+        item.price,
+        item.quantity,
+        addressID,
+      ];
+      return db.query(
+        `INSERT INTO order_summary(product_id, product_name, product_price, product_quantity, addresses_id) VALUES($1, $2, $3, $4, $5)`,
+        values
+      );
+    }, 1000 * (idx + 1));
+  });
 };
 
 module.exports = {
@@ -57,4 +97,6 @@ module.exports = {
   allProducts,
   emptyCart,
   updateCart,
+  insertAddress,
+  insertOrderSummary,
 };

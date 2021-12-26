@@ -1,21 +1,12 @@
 BEGIN;
 
-DROP TABLE IF EXISTS users, cart, categories, products CASCADE;
+DROP TABLE IF EXISTS users, categories, products, cart, addresses, order_summary CASCADE;
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   email VARCHAR(50) NOT NULL,
   name VARCHAR(25) NOT NULL,
   password VARCHAR(70) NOT NULL
-);
-
-CREATE TABLE cart (
-  id SERIAL PRIMARY KEY,
-  imgurl VARCHAR(50) NOT NULL,
-  name VARCHAR(25) NOT NULL,
-  quantity INTEGER NOT NULL,
-  price REAL NOT NULL,
-  user_id INTEGER REFERENCES users(id)
 );
 
 CREATE TABLE categories (
@@ -31,18 +22,39 @@ CREATE TABLE products (
   category_id INTEGER REFERENCES categories(id)
 );
 
+CREATE TABLE cart (
+  id SERIAL PRIMARY KEY,
+  item_id INTEGER REFERENCES products(id),
+  imgurl VARCHAR(50) NOT NULL,
+  name VARCHAR(25) NOT NULL,
+  quantity INTEGER NOT NULL,
+  price REAL NOT NULL,
+  user_id INTEGER REFERENCES users(id)
+);
 
+CREATE TABLE addresses (
+  id SERIAL PRIMARY KEY,
+  full_name VARCHAR(50) NOT NULL,
+  address VARCHAR(50) NOT NULL,
+  city VARCHAR(50) NOT NULL,
+  zipcode VARCHAR(7) NOT NULL,
+  email VARCHAR(50) NOT NULL,
+  phonenumber VARCHAR(10) NOT NULL,
+  payment_method VARCHAR(10) NOT NULL,
+  user_id INTEGER REFERENCES users(id)
+);
+
+CREATE TABLE order_summary (
+  id SERIAL PRIMARY KEY,
+  product_id INTEGER NOT NULL,
+  product_name VARCHAR(25) NOT NULL,
+  product_price REAL NOT NULL,
+  product_quantity INTEGER NOT NULL,
+  addresses_id INTEGER REFERENCES addresses(id)
+);
 
 INSERT INTO users (email, name, password)  VALUES
   ('a@a.a', 'instadelivery', '$2a$10$o0HK3sKo410TvpvTdzgjN./LW8VmMmtlPc0f/s70QkKRXE18u68J.');
-
-INSERT INTO cart (imgurl, name, quantity, price, user_id)  VALUES
-  ('/store/dairy/1 milk.jpg', '1% Milk', 5, 10.90 , 1 ),
-  ('/store/dairy/3 milk.jpg', '3% Milk', 1, 10.90 , 1 ),
-  ('/store/meat/drumsticks.jpg', 'Drumsticks 8pk.', 3, 29.90 , 1),
-  ('/store/meat/full chicken.jpg', 'Full Chicken 1c.', 1, 39.90 , 1),
-  ('/store/meat/chicken liver.png', 'Chicken Liver', 1, 39.90 , 1),
-  ('/store/meat/salami.jpg', 'Salami.', 2, 23.90 , 1);
 
 INSERT INTO categories (name)  VALUES
   ('Dairy'),
@@ -160,5 +172,13 @@ INSERT INTO products (name, imgurl, price, category_id)  VALUES
   ('Cola 500ml 6pk.',  '/store/beverage/cola zero 6 bottles.jpg',  19.90 , 6),
   ('Van. Cherry D.Pepper',  '/store/beverage/dr pepper cherry vanilla.jpg',  6.90 , 6),
   ('XL',  '/store/beverage/blu.jpg',  4.90 , 6);
+
+INSERT INTO cart (item_id, imgurl, name, quantity, price, user_id)  VALUES
+  (1, '/store/dairy/1 milk.jpg', '1% Milk', 5, 10.90 , 1 ),
+  (2, '/store/dairy/3 milk.jpg', '3% Milk', 1, 10.90 , 1 ),
+  (51, '/store/meat/drumsticks.jpg', 'Drumsticks 8pk.', 3, 29.90 , 1),
+  (52, '/store/meat/full chicken.jpg', 'Full Chicken 1c.', 1, 39.90 , 1),
+  (54, '/store/meat/chicken liver.png', 'Chicken Liver', 1, 39.90 , 1),
+  (55, '/store/meat/salami.jpg', 'Salami.', 2, 23.90 , 1);
 
 COMMIT; 

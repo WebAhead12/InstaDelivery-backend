@@ -4,4 +4,13 @@ const throwError = (errorMessage, errorStatus) => {
   throw error;
 };
 
-module.exports = { throwError };
+//calculate total price of items added to cart.
+const totalPrice = (arrayOfItems) => {
+  let sum = 0;
+  for (let item of arrayOfItems) {
+    sum += item.price * item.quantity;
+  }
+  return sum.toFixed(2);
+};
+
+module.exports = { throwError, totalPrice };

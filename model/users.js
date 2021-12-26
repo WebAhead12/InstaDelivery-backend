@@ -11,19 +11,6 @@ const getUser = (email) => {
   });
 };
 
-//get User ID
-const getUserID = (user) => {
-  return getUser(user).then((accArray) => {
-    //account array of 1 item
-    const [account] = accArray;
-    if (!accArray.length) {
-      throw new Error(`This ${user} doesn't exist`);
-    } else {
-      return account.id;
-    }
-  });
-};
-
 //insert registered user to database
 const createUser = (account) => {
   const values = [account.email, account.name, account.password];
@@ -43,4 +30,4 @@ const getUserInfoByID = (id) => {
     });
 };
 
-module.exports = { getUser, createUser, getUserInfoByID, getUserID };
+module.exports = { getUser, createUser, getUserInfoByID };

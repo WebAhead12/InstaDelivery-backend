@@ -1,4 +1,5 @@
 const model = require("../model/shopping");
+const utils = require("../utils/utilities");
 
 //after checking that the user is logged in, send the cart items to frontend.
 const getCart = (req, res) => {
@@ -84,9 +85,32 @@ const fetchProducts = (req, res) => {
     });
 };
 
+const setOrder = (req, res) => {
+  const id = req.id;
+  const checkOutData = req.body;
+  //utils.totalPrice(items);
+  model //trick prettier
+    .insertAddress(id, checkOutData)
+    .then((res) => (req.addressID = res.id))
+    .then(() => model.getUsersCart(id))
+    .then((items) => (req.items = items))
+    .then(() => model.insertOrderSummary(req.addressID, req.items))
+    .then(() =>
+      res.status(200).send({
+        response: "Successful",
+        error: "",
+      })
+    )
+    .catch((err) => {
+      console.error(err);
+      res.send({ error: "Failed to insert data into db | " + err.message });
+    });
+};
+
 module.exports = {
   fetchProducts,
   getCart,
   setCart,
   fetchCategory,
+  setOrder,
 };
