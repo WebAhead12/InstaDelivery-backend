@@ -26,7 +26,7 @@ const login = (req, res) => {
         .compare(password, account.password)
         .then((match) => {
           if (!match) {
-            utils.throwError("Login unauthorized, Password mismatch", 401);
+            utils.throwError("Password mismatch, please try again", 401);
           } else {
             const token = jwt.sign({ user: account.id }, SECRET, {
               expiresIn: "1h",
@@ -56,7 +56,7 @@ const register = (req, res) => {
     .then((acc) => {
       if (acc.length) {
         //account exist
-        utils.throwError(`${account.email} already taken`, 403);
+        utils.throwError(`${account.email} already exists.`, 403);
       } else {
         //hash password then set a new account
 
@@ -80,7 +80,7 @@ const register = (req, res) => {
               .catch((error) =>
                 res.send({
                   error:
-                    "Something wrong, unable to create an account | " +
+                    "Something went wrong, unable to create an account | " +
                     error.message,
                 })
               )
