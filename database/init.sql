@@ -42,6 +42,7 @@ CREATE TABLE addresses (
   phonenumber VARCHAR(10) NOT NULL,
   payment_method VARCHAR(11) NOT NULL,
   total_price VARCHAR(8) NOT NULL,
+  order_status VARCHAR(10) DEFAULT 'inProcess',
   user_id INTEGER REFERENCES users(id)
 );
 

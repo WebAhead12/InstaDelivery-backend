@@ -67,9 +67,9 @@ const register = (req, res) => {
             //set user with the hashed password
             model
               .createUser({ ...account, password: hash })
-              .then(() => {
+              .then((result) => {
                 //make token and send to frontend, because it redirect to Home.
-                const token = jwt.sign({ user: account.id }, SECRET, {
+                const token = jwt.sign({ user: result.id }, SECRET, {
                   expiresIn: "1h",
                 });
                 res.status(200).send({
@@ -104,7 +104,9 @@ const userInfo = (req, res) => {
         res.status(200).send(info);
       }
     })
-    .catch((error) => res.status(404).send({ error: error.message }));
+    .catch((error) => {
+      res.status(404).send({ error: error.message });
+    });
 };
 
 module.exports = { login, register, userInfo };

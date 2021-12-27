@@ -14,10 +14,12 @@ const getUser = (email) => {
 //insert registered user to database
 const createUser = (account) => {
   const values = [account.email, account.name, account.password];
-  return db.query(
-    `INSERT INTO users(email, name, password) VALUES($1, $2, $3)`,
-    values
-  );
+  return db
+    .query(
+      `INSERT INTO users(email, name, password) VALUES($1, $2, $3) RETURNING id`,
+      values
+    )
+    .then((res) => res.rows[0]);
 };
 
 //get user info by id
